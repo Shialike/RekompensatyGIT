@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="dbModelStoreContainer">
+    <EntitySet Name="Users" EntityType="dbModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HuntedAnimals" EntityType="dbModel.Store.HuntedAnimals" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserHuntedAnimal" Association="dbModel.Store.UserHuntedAnimal">
+      <End Role="User" EntitySet="Users" />
+      <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HuntedAnimals">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Type" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <Association Name="UserHuntedAnimal">
+    <End Role="User" Type="dbModel.Store.Users" Multiplicity="1" />
+    <End Role="HuntedAnimal" Type="dbModel.Store.HuntedAnimals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HuntedAnimal">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="dbModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="dbModelContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="dbModel.User" />
+          <EntitySet Name="HuntedAnimals" EntityType="dbModel.HuntedAnimal" />
+          <AssociationSet Name="UserHuntedAnimal" Association="dbModel.UserHuntedAnimal">
+            <End Role="User" EntitySet="Users" />
+            <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="HuntedAnimals" Relationship="dbModel.UserHuntedAnimal" FromRole="User" ToRole="HuntedAnimal" />
+        </EntityType>
+        <EnumType Name="AnimalType" cg:ExternalTypeName="Rekompensaty.Common.Enums.AnimalType">
+          <Member Name="Deer" />
+          <Member Name="FallowDeer" />
+          <Member Name="RoeDeer" />
+          <Member Name="Boar" />
+          <Member Name="Fox" />
+        </EnumType>
+        <EntityType Name="HuntedAnimal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Type" Type="dbModel.AnimalType" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="dbModel.UserHuntedAnimal" FromRole="HuntedAnimal" ToRole="User" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <Association Name="UserHuntedAnimal">
+          <End Type="dbModel.User" Role="User" Multiplicity="1" />
+          <End Type="dbModel.HuntedAnimal" Role="HuntedAnimal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HuntedAnimal">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbModelStoreContainer" CdmEntityContainer="dbModelContext">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(dbModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HuntedAnimals">
+      <EntityTypeMapping TypeName="IsTypeOf(dbModel.HuntedAnimal)">
+        <MappingFragment StoreEntitySet="HuntedAnimals">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
