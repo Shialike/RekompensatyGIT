@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Rekompensaty.DataAccess
 {
-    public class DatabaseService : dbModelContext
+    internal class DatabaseService : dbModelContext, IDatabaseMethods
     {
         private static DatabaseService _instance;
 
@@ -25,10 +25,40 @@ namespace Rekompensaty.DataAccess
 
         #region Database access
 
+        public void AddAnimalType(AnimalTypeDTO animalType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddUser(UserDTO user)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool CheckIfDatabaseIsCorrect()
         {
             Instance.Database.Initialize(false);
             return Instance.Database.Exists();
+        }
+
+        public void EditAnimalType(AnimalTypeDTO animalType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserDTO EditUser(UserDTO user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<AnimalTypeDTO> GetAnimalTypes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<HuntedAnimalDTO> GetHuntedAnimalsForUser(Guid userId, DateTime? startDate = default(DateTime?), DateTime? endDate = default(DateTime?))
+        {
+            throw new NotImplementedException();
         }
 
         public List<UserDTO> GetUsers()
@@ -37,10 +67,22 @@ namespace Rekompensaty.DataAccess
             return AutoMapperImpl.Mapper.Map<List<UserDTO>>(users);
         }
 
-        #endregion
+        public void RemoveAnimalType(AnimalTypeDTO animalType)
+        {
+            throw new NotImplementedException();
+        }
 
-        #region Private Methods
-        
+        public void RemoveUser(UserDTO user)
+        {
+            throw new NotImplementedException();
+        }
+
+        IList<UserDTO> IDatabaseMethods.GetUsers()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
+        
     }
 }

@@ -27,5 +27,6 @@ namespace Rekompensaty.DataAccess
     
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<HuntedAnimal> HuntedAnimals { get; set; }
+        public virtual DbSet<AnimalType> AnimalTypes { get; set; }
     }
 }

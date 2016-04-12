@@ -41,8 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="DTO\IDTO.cs" />
-    <Compile Include="Enums\AnimalType.cs" />
+    <Compile Include="DTO\AnimalTypeDTO.cs" />
+    <Compile Include="DTO\HuntedAnimalDTO.cs" />
+    <Compile Include="DTO\BaseDTO.cs" />
     <Compile Include="Helpers\CommonExtenstionMethods.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

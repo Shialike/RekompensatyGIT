@@ -8,9 +8,14 @@
   <EntityContainer Name="dbModelStoreContainer">
     <EntitySet Name="Users" EntityType="dbModel.Store.Users" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="HuntedAnimals" EntityType="dbModel.Store.HuntedAnimals" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AnimalTypes" EntityType="dbModel.Store.AnimalTypes" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserHuntedAnimal" Association="dbModel.Store.UserHuntedAnimal">
       <End Role="User" EntitySet="Users" />
       <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
+    </AssociationSet>
+    <AssociationSet Name="HuntedAnimalAnimalType" Association="dbModel.Store.HuntedAnimalAnimalType">
+      <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
+      <End Role="AnimalType" EntitySet="AnimalTypes" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Users">
@@ -19,14 +24,24 @@
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="HuntedAnimals">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Type" Type="int" Nullable="false" />
     <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="HuntDate" Type="datetime" Nullable="false" />
+    <Property Name="CashGiveback" Type="decimal" Nullable="false" />
+    <Property Name="AnimalType_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnimalTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="UserHuntedAnimal">
     <End Role="User" Type="dbModel.Store.Users" Multiplicity="1" />
@@ -37,6 +52,18 @@
       </Principal>
       <Dependent Role="HuntedAnimal">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HuntedAnimalAnimalType">
+    <End Role="HuntedAnimal" Type="dbModel.Store.HuntedAnimals" Multiplicity="*" />
+    <End Role="AnimalType" Type="dbModel.Store.AnimalTypes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="AnimalType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HuntedAnimal">
+        <PropertyRef Name="AnimalType_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -51,6 +78,11 @@
             <End Role="User" EntitySet="Users" />
             <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
           </AssociationSet>
+          <EntitySet Name="AnimalTypes" EntityType="dbModel.AnimalType" />
+          <AssociationSet Name="HuntedAnimalAnimalType" Association="dbModel.HuntedAnimalAnimalType">
+            <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
+            <End Role="AnimalType" EntitySet="AnimalTypes" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -59,22 +91,18 @@
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="Name" Type="String" Nullable="false" />
           <NavigationProperty Name="HuntedAnimals" Relationship="dbModel.UserHuntedAnimal" FromRole="User" ToRole="HuntedAnimal" />
+          <Property Name="Surname" Type="String" Nullable="false" />
         </EntityType>
-        <EnumType Name="AnimalType" cg:ExternalTypeName="Rekompensaty.Common.Enums.AnimalType">
-          <Member Name="Deer" />
-          <Member Name="FallowDeer" />
-          <Member Name="RoeDeer" />
-          <Member Name="Boar" />
-          <Member Name="Fox" />
-        </EnumType>
         <EntityType Name="HuntedAnimal">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="Type" Type="dbModel.AnimalType" Nullable="false" />
           <NavigationProperty Name="User" Relationship="dbModel.UserHuntedAnimal" FromRole="HuntedAnimal" ToRole="User" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="HuntDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="AnimalType" Relationship="dbModel.HuntedAnimalAnimalType" FromRole="HuntedAnimal" ToRole="AnimalType" />
+          <Property Name="CashGiveback" Type="Decimal" Nullable="false" />
         </EntityType>
         <Association Name="UserHuntedAnimal">
           <End Type="dbModel.User" Role="User" Multiplicity="1" />
@@ -88,6 +116,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AnimalType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="HuntedAnimals" Relationship="dbModel.HuntedAnimalAnimalType" FromRole="AnimalType" ToRole="HuntedAnimal" />
+        </EntityType>
+        <Association Name="HuntedAnimalAnimalType">
+          <End Type="dbModel.HuntedAnimal" Role="HuntedAnimal" Multiplicity="*" />
+          <End Type="dbModel.AnimalType" Role="AnimalType" Multiplicity="1" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -99,6 +139,7 @@
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -106,11 +147,28 @@
       <EntityTypeMapping TypeName="IsTypeOf(dbModel.HuntedAnimal)">
         <MappingFragment StoreEntitySet="HuntedAnimals">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="HuntDate" ColumnName="HuntDate" />
+          <ScalarProperty Name="CashGiveback" ColumnName="CashGiveback" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="AnimalTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(dbModel.AnimalType)">
+        <MappingFragment StoreEntitySet="AnimalTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="HuntedAnimalAnimalType" TypeName="dbModel.HuntedAnimalAnimalType" StoreEntitySet="HuntedAnimals">
+      <EndProperty Name="AnimalType">
+        <ScalarProperty Name="Id" ColumnName="AnimalType_Id" />
+      </EndProperty>
+      <EndProperty Name="HuntedAnimal">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

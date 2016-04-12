@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Rekompensaty.Common.DTO
 {
-    public interface IDTO
+    public class BaseDTO
     {
+        public Guid Id { get; set; }
     }
 }

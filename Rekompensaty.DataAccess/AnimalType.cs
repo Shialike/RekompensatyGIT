@@ -12,14 +12,18 @@ namespace Rekompensaty.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class HuntedAnimal : IEntityClass
+    public partial class AnimalType : IEntityClass
     {
-        public System.Guid Id { get; set; }
-        public System.Guid UserId { get; set; }
-        public System.DateTime HuntDate { get; set; }
-        public decimal CashGiveback { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AnimalType()
+        {
+            this.HuntedAnimals = new HashSet<HuntedAnimal>();
+        }
     
-        public virtual User User { get; set; }
-        public virtual AnimalType AnimalType { get; set; }
+        public System.Guid Id { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HuntedAnimal> HuntedAnimals { get; set; }
     }
 }
