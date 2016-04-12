@@ -20,7 +20,8 @@ namespace Rekompensaty
             AutoMapperImpl.Configure();
             try
             {
-                if(!DatabaseService.Instance.CheckIfDatabaseIsCorrect())
+                var dbAccess = new DatabaseAccess();
+                if(!dbAccess.CheckIfDatabaseIsCorrect())
                 {
                     NoDBError();
                 }

@@ -3,12 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        
+        WindowStartupLocation="CenterScreen"
         xmlns:local="clr-namespace:Rekompensaty"
         mc:Ignorable="d"
-        Title="Rekompensaty" Height="350" Width="525">
+        Title="Rekompensaty" Height="600" Width="800">
+
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -19,9 +21,19 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" MinWidth="150" Margin="5"/>
-        <DatePicker Grid.Row="0" Grid.Column="1" />
-        <DatePicker Grid.Row="0" Grid.Column="2" />
-        <DataGrid Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="0" />
+        <Menu Grid.Row="0" Grid.ColumnSpan="4" Grid.Column="0">
+            <MenuItem Header="_Aplikacja">
+                <MenuItem Header="_Wyjście" Click="Exit_Click" />
+            </MenuItem>
+            <MenuItem Header="_Myśliwi">
+                <MenuItem Header="Dod_aj myśliwego" Click="AddUser_Click" />
+                <MenuItem Header="_Edytuj myśliwego" Click="EditUser_Click" />
+                <MenuItem Header="_Usuń myśliwego" Click="RemoveUser_Click" />
+            </MenuItem>
+        </Menu>
+        <ComboBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" MinWidth="150" Margin="5"/>
+        <DatePicker Grid.Row="1" Grid.Column="1" MinWidth="150" Margin="5" />
+        <DatePicker Grid.Row="1" Grid.Column="2" MinWidth="150" Margin="5" />
+        <DataGrid Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="0" Margin="5" />
     </Grid>
 </Window>

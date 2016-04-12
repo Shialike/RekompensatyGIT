@@ -9,6 +9,7 @@ namespace Rekompensaty.DataAccess
 {
     public interface IDatabaseMethods
     {
+        bool CheckIfDatabaseIsCorrect();
         IList<UserDTO> GetUsers();
         void AddUser(UserDTO user);
         UserDTO EditUser(UserDTO user);

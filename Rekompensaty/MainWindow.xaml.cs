@@ -3,6 +3,7 @@ using Rekompensaty.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,15 +22,64 @@ namespace Rekompensaty
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private DatabaseAccess _dbAccess = new DatabaseAccess();
+        private ObservableCollection<UserDTO> _users;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(String info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
-            Users = new ObservableCollection<UserDTO>(DatabaseService.Instance.GetUsers());
+            Users = new ObservableCollection<UserDTO>();
         }
 
-        public ObservableCollection<UserDTO> Users { get; set; }
+        public void FetchData()
+        {
+            var task = new Task(() =>
+            {
+                Users = new ObservableCollection<UserDTO>(_dbAccess.GetUsers());
+            });
+            task.Start();
+        }
+
+        public ObservableCollection<UserDTO> Users
+        {
+            get { return _users; }
+            set
+            {
+                _users = value;
+                NotifyPropertyChanged("Users");
+            }
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+        
+        private void AddUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

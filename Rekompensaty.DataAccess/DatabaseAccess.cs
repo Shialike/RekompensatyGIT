@@ -19,6 +19,11 @@ namespace Rekompensaty.DataAccess
             DatabaseService.Instance.AddUser(user);
         }
 
+        public bool CheckIfDatabaseIsCorrect()
+        {
+            return DatabaseService.Instance.CheckIfDatabaseIsCorrect();
+        }
+
         public void EditAnimalType(AnimalTypeDTO animalType)
         {
             DatabaseService.Instance.EditAnimalType(animalType);
