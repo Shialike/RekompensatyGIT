@@ -22,7 +22,13 @@ namespace Rekompensaty.DataAccess
             var config = new MapperConfiguration((mapper) =>
             {
                 mapper.CreateMap<User, UserDTO>();
-                mapper.CreateMap<UserDTO, User>();                
+                mapper.CreateMap<UserDTO, User>();
+
+                mapper.CreateMap<HuntedAnimal, HuntedAnimalDTO>();
+                mapper.CreateMap<HuntedAnimalDTO, HuntedAnimal>();
+
+                mapper.CreateMap<AnimalType, AnimalTypeDTO>();
+                mapper.CreateMap<AnimalTypeDTO, AnimalType>();
             });
             return config.CreateMapper();
         }

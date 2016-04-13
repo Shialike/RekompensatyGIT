@@ -9,6 +9,5 @@ namespace Rekompensaty.Common.DTO
     public class AnimalTypeDTO : BaseDTO
     {
         public string Name { get; set; }
-        public List<HuntedAnimalDTO> HuntedAnimals { get; set; }
     }
 }

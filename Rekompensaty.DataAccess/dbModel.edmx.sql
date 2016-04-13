@@ -55,7 +55,7 @@ CREATE TABLE [dbo].[HuntedAnimals] (
     [Id] uniqueidentifier  NOT NULL,
     [UserId] uniqueidentifier  NOT NULL,
     [HuntDate] datetime  NOT NULL,
-    [CashGiveback] decimal(18,0)  NOT NULL,
+    [CashGiveback] decimal(18,2)  NOT NULL,
     [AnimalType_Id] uniqueidentifier  NOT NULL
 );
 GO

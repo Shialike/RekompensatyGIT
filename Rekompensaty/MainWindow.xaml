@@ -6,7 +6,7 @@
         WindowStartupLocation="CenterScreen"
         xmlns:local="clr-namespace:Rekompensaty"
         mc:Ignorable="d"
-        Title="Rekompensaty" Height="600" Width="800">
+        Title="Rekompensaty" Height="480" Width="640">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -25,15 +25,27 @@
             <MenuItem Header="_Aplikacja">
                 <MenuItem Header="_Wyjście" Click="Exit_Click" />
             </MenuItem>
-            <MenuItem Header="_Myśliwi">
+            <MenuItem Header="_Dane">
+                <MenuItem Header="_Dodaj dane" Click="AddData_Click" />
+                <Separator />
+                <MenuItem Header="Dodaj typ _zwierzyny" Click="AddAnimalType_Click" />
+                <Separator />
                 <MenuItem Header="Dod_aj myśliwego" Click="AddUser_Click" />
                 <MenuItem Header="_Edytuj myśliwego" Click="EditUser_Click" />
                 <MenuItem Header="_Usuń myśliwego" Click="RemoveUser_Click" />
             </MenuItem>
         </Menu>
-        <ComboBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" MinWidth="150" Margin="5"/>
-        <DatePicker Grid.Row="1" Grid.Column="1" MinWidth="150" Margin="5" />
-        <DatePicker Grid.Row="1" Grid.Column="2" MinWidth="150" Margin="5" />
-        <DataGrid Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="0" Margin="5" />
+        <ComboBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FullName" 
+                  SelectedItem="{Binding SelectedUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinWidth="150" Margin="5"/>
+        <DatePicker Grid.Row="1" Grid.Column="1" MinWidth="150" Margin="5" SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}" Text="Od" />
+        <DatePicker Grid.Row="1" Grid.Column="2" MinWidth="150" Margin="5" SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}" Text="Do" />
+        <DataGrid Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="0" Margin="5" HeadersVisibility="Column" AutoGenerateColumns="False" IsReadOnly="True"
+                  ItemsSource="{Binding HuntedAnimals, UpdateSourceTrigger=PropertyChanged}" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Data polowania" Binding="{Binding HuntDateString}" Width="*" MinWidth="100" />
+                <DataGridTextColumn Header="Rodzaj" Binding="{Binding AnimalType.Name}" Width="*" MinWidth="100" />
+                <DataGridTextColumn Header="Wysokość rekompensaty" Binding="{Binding CashGiveback, StringFormat=00.00zł}" Width="*" MinWidth="100" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

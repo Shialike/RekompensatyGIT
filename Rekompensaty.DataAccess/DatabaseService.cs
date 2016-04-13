@@ -27,12 +27,28 @@ namespace Rekompensaty.DataAccess
 
         public void AddAnimalType(AnimalTypeDTO animalType)
         {
-            throw new NotImplementedException();
+            if (animalType.Id == Guid.Empty)
+            {
+                animalType.Id = Guid.NewGuid();
+            }
+            else
+            {
+                Instance.EditAnimalType(animalType);
+            }
+            RunCommand(() => Instance.AnimalTypes.Add(AutoMapperImpl.Mapper.Map<AnimalType>(animalType)));
         }
 
         public void AddUser(UserDTO user)
         {
-            throw new NotImplementedException();
+            if (user.Id == Guid.Empty)
+            {
+                user.Id = Guid.NewGuid();
+            }
+            else
+            {
+                Instance.EditUser(user);
+            }
+            RunCommand(() => Instance.Users.Add(AutoMapperImpl.Mapper.Map<User>(user)));
         }
 
         public bool CheckIfDatabaseIsCorrect()
@@ -58,12 +74,29 @@ namespace Rekompensaty.DataAccess
 
         public IList<HuntedAnimalDTO> GetHuntedAnimalsForUser(Guid userId, DateTime? startDate = default(DateTime?), DateTime? endDate = default(DateTime?))
         {
-            throw new NotImplementedException();
+            try
+            {
+                var animalsQuery = Instance.HuntedAnimals.Where(a => a.UserId == userId);
+                if (startDate.HasValue)
+                {
+                    animalsQuery = animalsQuery.Where(a => a.HuntDate >= startDate.Value);
+                }
+                if (endDate.HasValue)
+                {
+                    animalsQuery = animalsQuery.Where(a => a.HuntDate <= endDate.Value);
+                }
+                var animals = animalsQuery.OrderBy(a => a.HuntDate).ToList();
+                return AutoMapperImpl.Mapper.Map<List<HuntedAnimalDTO>>(animals);
+            }
+            catch (Exception)
+            {
+            }
+            return new List<HuntedAnimalDTO>();
         }
 
         public List<UserDTO> GetUsers()
         {
-            var users = Instance.Users.ToList();
+            var users = Instance.Users.OrderBy(a => a.Surname).ThenBy(a => a.Name).ToList();
             return AutoMapperImpl.Mapper.Map<List<UserDTO>>(users);
         }
 
@@ -84,5 +117,19 @@ namespace Rekompensaty.DataAccess
 
         #endregion
         
+        private void RunCommand(Action method)
+        {
+            try
+            {
+                method();
+            }
+            catch(Exception)
+            {
+            }
+            finally
+            {
+                Instance.SaveChanges();
+            }
+        }
     }
 }

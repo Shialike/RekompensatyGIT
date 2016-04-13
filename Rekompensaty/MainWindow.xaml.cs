@@ -24,32 +24,49 @@ namespace Rekompensaty
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        #region Fields and events
+
         private DatabaseAccess _dbAccess = new DatabaseAccess();
         private ObservableCollection<UserDTO> _users;
+        private DateTime _startDate;
+        private DateTime _endDate;
+        private UserDTO _selectedUser;
+        private ObservableCollection<HuntedAnimalDTO> _huntedAnimals;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(String info)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
+        #endregion
 
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
             Users = new ObservableCollection<UserDTO>();
+            HuntedAnimals = new ObservableCollection<HuntedAnimalDTO>();
+            SetInitialDate();
+            FetchData();
         }
 
-        public void FetchData()
+        #region Properties
+
+        public DateTime StartDate
         {
-            var task = new Task(() =>
+            get { return _startDate; }
+            set
             {
-                Users = new ObservableCollection<UserDTO>(_dbAccess.GetUsers());
-            });
-            task.Start();
+                _startDate = value;
+                NotifyPropertyChanged("StartDate");
+                FetchHuntedAnimals();
+            }
+        }
+
+        public DateTime EndDate
+        {
+            get { return _endDate; }
+            set
+            {
+                _endDate = value;
+                NotifyPropertyChanged("EndDate");
+                FetchHuntedAnimals();
+            }
         }
 
         public ObservableCollection<UserDTO> Users
@@ -62,14 +79,87 @@ namespace Rekompensaty
             }
         }
 
+        public UserDTO SelectedUser
+        {
+            get { return _selectedUser; }
+            set
+            {
+                _selectedUser = value;
+                NotifyPropertyChanged("SelectedUser");
+                FetchHuntedAnimals();
+            }
+        }
+
+        public ObservableCollection<HuntedAnimalDTO> HuntedAnimals
+        {
+            get { return _huntedAnimals; }
+            set
+            {
+                _huntedAnimals = value;
+                NotifyPropertyChanged("HuntedAnimals");
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void FetchData()
+        {
+            var task = new Task(() =>
+            {
+                Users = new ObservableCollection<UserDTO>(_dbAccess.GetUsers());
+                if (SelectedUser == null)
+                {
+                    SelectedUser = Users.FirstOrDefault();
+                    FetchHuntedAnimals();
+                }
+            });
+            task.Start();
+        }
+
+        public void FetchHuntedAnimals()
+        {
+            var task = new Task(() =>
+            {
+                if (SelectedUser != null)
+                {
+                    HuntedAnimals = new ObservableCollection<HuntedAnimalDTO>(_dbAccess.GetHuntedAnimalsForUser(SelectedUser.Id, StartDate, EndDate));
+                }
+            });
+            task.Start();
+        }
+
+        private void SetInitialDate()
+        {
+            var seasonStart = new DateTime(DateTime.Now.Year, 4, 1);
+            if (DateTime.Now >= seasonStart)
+            {
+                StartDate = seasonStart;
+                EndDate = new DateTime(seasonStart.AddYears(1).Year, 3, 31);
+            }
+            else
+            {
+                StartDate = seasonStart.AddYears(-1);
+                EndDate = new DateTime(seasonStart.Year, 3, 31);
+            }
+        }
+
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
-        
+
         private void AddUser_Click(object sender, RoutedEventArgs e)
         {
-
+            var userDTO = new UserDTO();
+            var edtWnd = new UserEditWindow(userDTO, this);
+            var result = edtWnd.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                _dbAccess.AddUser(userDTO);
+                FetchData();
+            }
         }
 
         private void EditUser_Click(object sender, RoutedEventArgs e)
@@ -81,5 +171,30 @@ namespace Rekompensaty
         {
 
         }
+
+        private void AddAnimalType_Click(object sender, RoutedEventArgs e)
+        {
+            //_dbAccess.AddAnimalType(new AnimalTypeDTO() { Name = "Sarna" });
+        }
+
+        private void AddData_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        #endregion
+
+        #region INotifyPropertChanged implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        private void NotifyPropertyChanged(String info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        #endregion
     }
 }

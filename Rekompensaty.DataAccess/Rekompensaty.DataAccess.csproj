@@ -141,11 +141,11 @@
       <DependentUpon>dbModel.edmx</DependentUpon>
     </Content>
     <Content Include="dbRekompensaty.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="dbRekompensaty_log.ldf">
       <DependentUpon>dbRekompensaty.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
