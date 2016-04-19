@@ -6,7 +6,7 @@
         WindowStartupLocation="CenterScreen"
         xmlns:local="clr-namespace:Rekompensaty"
         mc:Ignorable="d"
-        Title="Rekompensaty" Height="480" Width="640">
+        Title="Rekompensaty" Height="500" Width="700">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -28,11 +28,11 @@
             <MenuItem Header="_Dane">
                 <MenuItem Header="_Dodaj dane" Click="AddData_Click" />
                 <Separator />
-                <MenuItem Header="Dodaj typ _zwierzyny" Click="AddAnimalType_Click" />
-                <Separator />
+                <!--<MenuItem Header="Dodaj typ _zwierzyny" Click="AddAnimalType_Click" />
+                <Separator />-->
                 <MenuItem Header="Dod_aj myśliwego" Click="AddUser_Click" />
-                <MenuItem Header="_Edytuj myśliwego" Click="EditUser_Click" />
-                <MenuItem Header="_Usuń myśliwego" Click="RemoveUser_Click" />
+                <!--<MenuItem Header="_Edytuj myśliwego" Click="EditUser_Click" />
+                <MenuItem Header="_Usuń myśliwego" Click="RemoveUser_Click" />-->
             </MenuItem>
         </Menu>
         <ComboBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FullName" 
@@ -42,9 +42,12 @@
         <DataGrid Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="0" Margin="5" HeadersVisibility="Column" AutoGenerateColumns="False" IsReadOnly="True"
                   ItemsSource="{Binding HuntedAnimals, UpdateSourceTrigger=PropertyChanged}" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Data polowania" Binding="{Binding HuntDateString}" Width="*" MinWidth="100" />
-                <DataGridTextColumn Header="Rodzaj" Binding="{Binding AnimalType.Name}" Width="*" MinWidth="100" />
-                <DataGridTextColumn Header="Wysokość rekompensaty" Binding="{Binding CashGiveback, StringFormat=00.00zł}" Width="*" MinWidth="100" />
+                <DataGridTextColumn Header="Data polowania" Binding="{Binding HuntDateString}" Width="*" MinWidth="50" />
+                <DataGridTextColumn Header="Rodzaj" Binding="{Binding AnimalType.Name}" Width="*" MinWidth="50" />
+                <DataGridTextColumn Header="Cena za kilogram" Binding="{Binding PricePerKilo, StringFormat=0.00zł}" Width="*" MinWidth="50" />
+                <DataGridTextColumn Header="Waga" Binding="{Binding Weight, StringFormat=00.00kg}" Width="*" MinWidth="50" />
+                <DataGridTextColumn Header="Cena" Binding="{Binding TotalPrice, StringFormat=0.00zł}" Width="*" MinWidth="50" />
+                <DataGridTextColumn Header="Rekompensata" Binding="{Binding Revenue, StringFormat=0.00zł}" Width="*" MinWidth="75" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

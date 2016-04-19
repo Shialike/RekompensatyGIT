@@ -106,28 +106,20 @@ namespace Rekompensaty
 
         public void FetchData()
         {
-            var task = new Task(() =>
+            Users = new ObservableCollection<UserDTO>(_dbAccess.GetUsers());
+            if (SelectedUser == null)
             {
-                Users = new ObservableCollection<UserDTO>(_dbAccess.GetUsers());
-                if (SelectedUser == null)
-                {
-                    SelectedUser = Users.FirstOrDefault();
-                    FetchHuntedAnimals();
-                }
-            });
-            task.Start();
+                SelectedUser = Users.FirstOrDefault();
+                FetchHuntedAnimals();
+            }
         }
 
         public void FetchHuntedAnimals()
         {
-            var task = new Task(() =>
+            if (SelectedUser != null)
             {
-                if (SelectedUser != null)
-                {
-                    HuntedAnimals = new ObservableCollection<HuntedAnimalDTO>(_dbAccess.GetHuntedAnimalsForUser(SelectedUser.Id, StartDate, EndDate));
-                }
-            });
-            task.Start();
+                HuntedAnimals = new ObservableCollection<HuntedAnimalDTO>(_dbAccess.GetHuntedAnimalsForUser(SelectedUser.Id, StartDate, EndDate));
+            }
         }
 
         private void SetInitialDate()
@@ -174,11 +166,23 @@ namespace Rekompensaty
 
         private void AddAnimalType_Click(object sender, RoutedEventArgs e)
         {
-            //_dbAccess.AddAnimalType(new AnimalTypeDTO() { Name = "Sarna" });
+            _dbAccess.AddAnimalType(new AnimalTypeDTO() { Name = "Jeleń" });
+            _dbAccess.AddAnimalType(new AnimalTypeDTO() { Name = "Daniel" });
+            _dbAccess.AddAnimalType(new AnimalTypeDTO() { Name = "Sarna" });
+            _dbAccess.AddAnimalType(new AnimalTypeDTO() { Name = "Dzik" });
         }
 
         private void AddData_Click(object sender, RoutedEventArgs e)
         {
+            var huntedAnimalDTO = new HuntedAnimalDTO();
+            var animalTypes = _dbAccess.GetAnimalTypes();
+            var edtWnd = new NewHuntWindow(animalTypes.ToList(), SelectedUser, huntedAnimalDTO, this);
+            var result = edtWnd.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                _dbAccess.AddHuntedAnimal(huntedAnimalDTO);
+                FetchData();
+            }
         }
 
         #endregion

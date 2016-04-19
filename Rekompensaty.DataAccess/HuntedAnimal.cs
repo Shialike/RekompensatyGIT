@@ -17,7 +17,9 @@ namespace Rekompensaty.DataAccess
         public System.Guid Id { get; set; }
         public System.Guid UserId { get; set; }
         public System.DateTime HuntDate { get; set; }
-        public decimal CashGiveback { get; set; }
+        public double Weight { get; set; }
+        public decimal PricePerKilo { get; set; }
+        public System.Guid AnimalTypeId { get; set; }
     
         public virtual User User { get; set; }
         public virtual AnimalType AnimalType { get; set; }

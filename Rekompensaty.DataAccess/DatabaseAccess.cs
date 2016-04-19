@@ -34,7 +34,7 @@ namespace Rekompensaty.DataAccess
             return DatabaseService.Instance.EditUser(user);
         }
 
-        public IList<AnimalTypeDTO> GetAnimalTypes()
+        public List<AnimalTypeDTO> GetAnimalTypes()
         {
             return DatabaseService.Instance.GetAnimalTypes();
         }
@@ -57,6 +57,11 @@ namespace Rekompensaty.DataAccess
         public void RemoveUser(UserDTO user)
         {
             DatabaseService.Instance.RemoveUser(user);
+        }
+
+        public void AddHuntedAnimal(HuntedAnimalDTO huntedAnimalDTO)
+        {
+            DatabaseService.Instance.AddHuntedAnimal(huntedAnimalDTO);
         }
     }
 }

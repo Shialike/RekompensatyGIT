@@ -1,0 +1,57 @@
+﻿<Window x:Class="Rekompensaty.NewHuntWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Rekompensaty"
+        mc:Ignorable="d" WindowStartupLocation="CenterOwner"
+        Title="Polowanie" Height="300" Width="300">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding HunterName}" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Typ zwierzyny: " />
+        <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding AnimalTypes}" SelectedItem="{Binding SelectedAnimalType, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" DisplayMemberPath="Name" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Data polowania: " />
+        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding HuntDate, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Waga (kg): " />
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged, StringFormat=00.00, NotifyOnValidationError=True}" />
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Cena (zł) za kilogram: " />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, StringFormat=0.00, NotifyOnValidationError=True}" />
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Height="23" Content="Zapisz" Click="Save" IsEnabled="{Binding CanSave}" />
+            <Button Height="23" Content="Anuluj" Click="Cancel" />
+        </StackPanel>
+    </Grid>
+</Window>

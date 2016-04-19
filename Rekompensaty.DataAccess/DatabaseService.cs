@@ -67,7 +67,28 @@ namespace Rekompensaty.DataAccess
             throw new NotImplementedException();
         }
 
-        public IList<AnimalTypeDTO> GetAnimalTypes()
+        public List<AnimalTypeDTO> GetAnimalTypes()
+        {
+            return AutoMapperImpl.Mapper.Map<List<AnimalTypeDTO>>(Instance.AnimalTypes.ToList());
+        }
+
+        public void AddHuntedAnimal(HuntedAnimalDTO huntedAnimalDTO)
+        {
+            if (huntedAnimalDTO.Id == Guid.Empty)
+            {
+                huntedAnimalDTO.Id = Guid.NewGuid();
+            }
+            else
+            {
+                Instance.EditHuntedAnimal(huntedAnimalDTO);
+            }
+            var hunt = AutoMapperImpl.Mapper.Map<HuntedAnimal>(huntedAnimalDTO);
+            hunt.AnimalTypeId = huntedAnimalDTO.AnimalType.Id;
+            hunt.AnimalType = null;
+            RunCommand(() => Instance.HuntedAnimals.Add(hunt));
+        }
+
+        private void EditHuntedAnimal(HuntedAnimalDTO huntedAnimalDTO)
         {
             throw new NotImplementedException();
         }

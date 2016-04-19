@@ -17,7 +17,7 @@ namespace Rekompensaty.DataAccess
         void AddAnimalType(AnimalTypeDTO animalType);
         void EditAnimalType(AnimalTypeDTO animalType);
         void RemoveAnimalType(AnimalTypeDTO animalType);
-        IList<AnimalTypeDTO> GetAnimalTypes();
+        List<AnimalTypeDTO> GetAnimalTypes();
         IList<HuntedAnimalDTO> GetHuntedAnimalsForUser(Guid userId, DateTime? startDate = null, DateTime? endDate = null);
         
     }

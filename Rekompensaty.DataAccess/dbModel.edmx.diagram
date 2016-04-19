@@ -9,7 +9,7 @@
         <EntityTypeShape EntityType="dbModel.HuntedAnimal" Width="1.5" PointX="3.875" PointY="1.25" />
         <AssociationConnector Association="dbModel.UserHuntedAnimal" />
         <EntityTypeShape EntityType="dbModel.AnimalType" Width="1.5" PointX="5.875" PointY="1.25" />
-        <AssociationConnector Association="dbModel.HuntedAnimalAnimalType" />
+        <AssociationConnector Association="dbModel.AnimalTypeHuntedAnimal" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/12/2016 19:53:27
+-- Date Created: 04/19/2016 21:07:31
 -- Generated from EDMX file: C:\Users\shial\Documents\Visual Studio 2015\Projects\RekompensatyGIT\Rekompensaty.DataAccess\dbModel.edmx
 -- --------------------------------------------------
 
@@ -20,8 +20,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_UserHuntedAnimal]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[HuntedAnimals] DROP CONSTRAINT [FK_UserHuntedAnimal];
 GO
-IF OBJECT_ID(N'[dbo].[FK_HuntedAnimalAnimalType]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[HuntedAnimals] DROP CONSTRAINT [FK_HuntedAnimalAnimalType];
+IF OBJECT_ID(N'[dbo].[FK_AnimalTypeHuntedAnimal]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[HuntedAnimals] DROP CONSTRAINT [FK_AnimalTypeHuntedAnimal];
 GO
 
 -- --------------------------------------------------
@@ -55,8 +55,9 @@ CREATE TABLE [dbo].[HuntedAnimals] (
     [Id] uniqueidentifier  NOT NULL,
     [UserId] uniqueidentifier  NOT NULL,
     [HuntDate] datetime  NOT NULL,
-    [CashGiveback] decimal(18,2)  NOT NULL,
-    [AnimalType_Id] uniqueidentifier  NOT NULL
+    [Weight] float  NOT NULL,
+    [PricePerKilo] decimal(18,0)  NOT NULL,
+    [AnimalTypeId] uniqueidentifier  NOT NULL
 );
 GO
 
@@ -108,19 +109,19 @@ ON [dbo].[HuntedAnimals]
     ([UserId]);
 GO
 
--- Creating foreign key on [AnimalType_Id] in table 'HuntedAnimals'
+-- Creating foreign key on [AnimalTypeId] in table 'HuntedAnimals'
 ALTER TABLE [dbo].[HuntedAnimals]
-ADD CONSTRAINT [FK_HuntedAnimalAnimalType]
-    FOREIGN KEY ([AnimalType_Id])
+ADD CONSTRAINT [FK_AnimalTypeHuntedAnimal]
+    FOREIGN KEY ([AnimalTypeId])
     REFERENCES [dbo].[AnimalTypes]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_HuntedAnimalAnimalType'
-CREATE INDEX [IX_FK_HuntedAnimalAnimalType]
+-- Creating non-clustered index for FOREIGN KEY 'FK_AnimalTypeHuntedAnimal'
+CREATE INDEX [IX_FK_AnimalTypeHuntedAnimal]
 ON [dbo].[HuntedAnimals]
-    ([AnimalType_Id]);
+    ([AnimalTypeId]);
 GO
 
 -- --------------------------------------------------

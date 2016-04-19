@@ -13,9 +13,9 @@
       <End Role="User" EntitySet="Users" />
       <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
     </AssociationSet>
-    <AssociationSet Name="HuntedAnimalAnimalType" Association="dbModel.Store.HuntedAnimalAnimalType">
-      <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
+    <AssociationSet Name="AnimalTypeHuntedAnimal" Association="dbModel.Store.AnimalTypeHuntedAnimal">
       <End Role="AnimalType" EntitySet="AnimalTypes" />
+      <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Users">
@@ -33,8 +33,9 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="HuntDate" Type="datetime" Nullable="false" />
-    <Property Name="CashGiveback" Type="decimal" Nullable="false" />
-    <Property Name="AnimalType_Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Weight" Type="float" Nullable="false" />
+    <Property Name="PricePerKilo" Type="decimal" Nullable="false" />
+    <Property Name="AnimalTypeId" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="AnimalTypes">
     <Key>
@@ -55,15 +56,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="HuntedAnimalAnimalType">
-    <End Role="HuntedAnimal" Type="dbModel.Store.HuntedAnimals" Multiplicity="*" />
+  <Association Name="AnimalTypeHuntedAnimal">
     <End Role="AnimalType" Type="dbModel.Store.AnimalTypes" Multiplicity="1" />
+    <End Role="HuntedAnimal" Type="dbModel.Store.HuntedAnimals" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AnimalType">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="HuntedAnimal">
-        <PropertyRef Name="AnimalType_Id" />
+        <PropertyRef Name="AnimalTypeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -79,9 +80,9 @@
             <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
           </AssociationSet>
           <EntitySet Name="AnimalTypes" EntityType="dbModel.AnimalType" />
-          <AssociationSet Name="HuntedAnimalAnimalType" Association="dbModel.HuntedAnimalAnimalType">
-            <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
+          <AssociationSet Name="AnimalTypeHuntedAnimal" Association="dbModel.AnimalTypeHuntedAnimal">
             <End Role="AnimalType" EntitySet="AnimalTypes" />
+            <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
@@ -101,8 +102,10 @@
           <NavigationProperty Name="User" Relationship="dbModel.UserHuntedAnimal" FromRole="HuntedAnimal" ToRole="User" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="HuntDate" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="AnimalType" Relationship="dbModel.HuntedAnimalAnimalType" FromRole="HuntedAnimal" ToRole="AnimalType" />
-          <Property Name="CashGiveback" Type="Decimal" Nullable="false" />
+          <Property Name="Weight" Type="Double" Nullable="false" />
+          <Property Name="PricePerKilo" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="AnimalType" Relationship="dbModel.AnimalTypeHuntedAnimal" FromRole="HuntedAnimal" ToRole="AnimalType" />
+          <Property Name="AnimalTypeId" Type="Guid" Nullable="false" />
         </EntityType>
         <Association Name="UserHuntedAnimal">
           <End Type="dbModel.User" Role="User" Multiplicity="1" />
@@ -122,11 +125,18 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="Name" Type="String" Nullable="false" />
-          <NavigationProperty Name="HuntedAnimals" Relationship="dbModel.HuntedAnimalAnimalType" FromRole="AnimalType" ToRole="HuntedAnimal" />
         </EntityType>
-        <Association Name="HuntedAnimalAnimalType">
-          <End Type="dbModel.HuntedAnimal" Role="HuntedAnimal" Multiplicity="*" />
+        <Association Name="AnimalTypeHuntedAnimal">
           <End Type="dbModel.AnimalType" Role="AnimalType" Multiplicity="1" />
+          <End Type="dbModel.HuntedAnimal" Role="HuntedAnimal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnimalType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HuntedAnimal">
+              <PropertyRef Name="AnimalTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -149,7 +159,9 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="HuntDate" ColumnName="HuntDate" />
-          <ScalarProperty Name="CashGiveback" ColumnName="CashGiveback" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="PricePerKilo" ColumnName="PricePerKilo" />
+          <ScalarProperty Name="AnimalTypeId" ColumnName="AnimalTypeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -161,14 +173,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="HuntedAnimalAnimalType" TypeName="dbModel.HuntedAnimalAnimalType" StoreEntitySet="HuntedAnimals">
-      <EndProperty Name="AnimalType">
-        <ScalarProperty Name="Id" ColumnName="AnimalType_Id" />
-      </EndProperty>
-      <EndProperty Name="HuntedAnimal">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

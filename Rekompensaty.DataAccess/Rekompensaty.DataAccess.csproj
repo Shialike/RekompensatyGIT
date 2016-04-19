@@ -131,8 +131,8 @@
   <ItemGroup>
     <Content Include="dbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>dbModel.Context.cs</LastGenOutput>
       <DependentUpon>dbModel.edmx</DependentUpon>
+      <LastGenOutput>dbModel.Context1.cs</LastGenOutput>
     </Content>
     <Content Include="dbModel.edmx.sql" />
     <Content Include="dbModel.tt">
