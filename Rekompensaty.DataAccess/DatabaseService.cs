@@ -69,7 +69,7 @@ namespace Rekompensaty.DataAccess
 
         public List<AnimalTypeDTO> GetAnimalTypes()
         {
-            return AutoMapperImpl.Mapper.Map<List<AnimalTypeDTO>>(Instance.AnimalTypes.ToList());
+            return AutoMapperImpl.Mapper.Map<List<AnimalTypeDTO>>(Instance.AnimalTypes.OrderBy(a => a.Name).ToList());
         }
 
         public void AddHuntedAnimal(HuntedAnimalDTO huntedAnimalDTO)

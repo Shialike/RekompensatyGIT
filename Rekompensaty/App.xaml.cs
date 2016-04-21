@@ -23,18 +23,18 @@ namespace Rekompensaty
                 var dbAccess = new DatabaseAccess();
                 if(!dbAccess.CheckIfDatabaseIsCorrect())
                 {
-                    NoDBError();
+                    NoDBError("");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                NoDBError();
+                NoDBError(ex.Message);
             }
         }
 
-        private static void NoDBError()
+        private static void NoDBError(string message)
         {
-            MessageBox.Show("Baza danych jest niepoprawna!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(string.Format("Wystąpił błąd podczas uruchamiania programu!\n {0}", message), "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             Current.Shutdown();
         }
     }

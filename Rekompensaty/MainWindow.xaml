@@ -26,7 +26,7 @@
                 <MenuItem Header="_Wyjście" Click="Exit_Click" />
             </MenuItem>
             <MenuItem Header="_Dane">
-                <MenuItem Header="_Dodaj dane" Click="AddData_Click" />
+                <MenuItem Header="_Dodaj dane" Click="AddData_Click" IsEnabled="{Binding CanAddData}" />
                 <Separator />
                 <!--<MenuItem Header="Dodaj typ _zwierzyny" Click="AddAnimalType_Click" />
                 <Separator />-->

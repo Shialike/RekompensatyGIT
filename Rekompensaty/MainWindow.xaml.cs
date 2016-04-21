@@ -86,6 +86,7 @@ namespace Rekompensaty
             {
                 _selectedUser = value;
                 NotifyPropertyChanged("SelectedUser");
+                NotifyPropertyChanged("CanAddData");
                 FetchHuntedAnimals();
             }
         }
@@ -98,6 +99,11 @@ namespace Rekompensaty
                 _huntedAnimals = value;
                 NotifyPropertyChanged("HuntedAnimals");
             }
+        }
+
+        public bool CanAddData
+        {
+            get { return SelectedUser != null; }
         }
 
         #endregion
