@@ -14,14 +14,14 @@ namespace Rekompensaty.DataAccess
     
     public partial class HuntedAnimal : IEntityClass
     {
-        public System.Guid Id { get; set; }
-        public System.Guid UserId { get; set; }
-        public System.DateTime HuntDate { get; set; }
+        public string Id { get; set; }
+        public string UserId { get; set; }
+        public string HuntDate { get; set; }
         public double Weight { get; set; }
-        public decimal PricePerKilo { get; set; }
-        public System.Guid AnimalTypeId { get; set; }
+        public double PricePerKilo { get; set; }
+        public string AnimalTypeId { get; set; }
     
-        public virtual User User { get; set; }
         public virtual AnimalType AnimalType { get; set; }
+        public virtual User User { get; set; }
     }
 }

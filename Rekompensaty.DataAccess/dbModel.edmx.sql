@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/19/2016 21:07:31
+-- Date Created: 04/21/2016 21:19:22
 -- Generated from EDMX file: C:\Users\shial\Documents\Visual Studio 2015\Projects\RekompensatyGIT\Rekompensaty.DataAccess\dbModel.edmx
 -- --------------------------------------------------
 

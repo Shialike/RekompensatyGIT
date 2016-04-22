@@ -17,14 +17,14 @@ namespace Rekompensaty.DataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.HuntedAnimals = new HashSet<HuntedAnimal>();
+            this.HuntedAnimal = new HashSet<HuntedAnimal>();
         }
     
-        public System.Guid Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HuntedAnimal> HuntedAnimals { get; set; }
+        public virtual ICollection<HuntedAnimal> HuntedAnimal { get; set; }
     }
 }

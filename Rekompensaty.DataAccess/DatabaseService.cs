@@ -1,4 +1,5 @@
 ﻿using Rekompensaty.Common.DTO;
+using Rekompensaty.Common.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +55,21 @@ namespace Rekompensaty.DataAccess
         public bool CheckIfDatabaseIsCorrect()
         {
             Instance.Database.Initialize(false);
-            return Instance.Database.Exists();
+            var exists = Instance.Database.Exists();
+            if (GetAnimalTypes().Count == 0)
+            {
+                AddAnimalType(new AnimalTypeDTO() { Name = "Jeleń Byk" });
+                AddAnimalType(new AnimalTypeDTO() { Name = "Jeleń Łania" });
+                AddAnimalType(new AnimalTypeDTO() { Name = "Jeleń Ciele" });
+                AddAnimalType(new AnimalTypeDTO() { Name = "Daniel Byk" });
+                AddAnimalType(new AnimalTypeDTO() { Name = "Daniel Łania" });
+                AddAnimalType(new AnimalTypeDTO() { Name = "Daniel Ciele" });
+                AddAnimalType(new AnimalTypeDTO() { Name = "Sarna Kozioł" });
+                AddAnimalType(new AnimalTypeDTO() { Name = "Sarna Koza" });
+                AddAnimalType(new AnimalTypeDTO() { Name = "Sarna Koźle" });
+                AddAnimalType(new AnimalTypeDTO() { Name = "Dzik" });
+            }
+            return exists && GetAnimalTypes().Count > 0;
         }
 
         public void EditAnimalType(AnimalTypeDTO animalType)
@@ -83,7 +98,7 @@ namespace Rekompensaty.DataAccess
                 Instance.EditHuntedAnimal(huntedAnimalDTO);
             }
             var hunt = AutoMapperImpl.Mapper.Map<HuntedAnimal>(huntedAnimalDTO);
-            hunt.AnimalTypeId = huntedAnimalDTO.AnimalType.Id;
+            hunt.AnimalTypeId = huntedAnimalDTO.AnimalType.Id.ToString();
             hunt.AnimalType = null;
             RunCommand(() => Instance.HuntedAnimals.Add(hunt));
         }
@@ -97,20 +112,23 @@ namespace Rekompensaty.DataAccess
         {
             try
             {
-                var animalsQuery = Instance.HuntedAnimals.Where(a => a.UserId == userId);
+                var stringId = userId.ToString();
+                var animalsQuery = Instance.HuntedAnimals.Where(a => a.UserId == stringId);
+                var allAnimals = animalsQuery.ToList();
                 if (startDate.HasValue)
                 {
-                    animalsQuery = animalsQuery.Where(a => a.HuntDate >= startDate.Value);
+                    allAnimals = allAnimals.Where(a => DateTime.Parse(a.HuntDate) >= startDate.Value).ToList();
                 }
                 if (endDate.HasValue)
                 {
-                    animalsQuery = animalsQuery.Where(a => a.HuntDate <= endDate.Value);
+                    allAnimals = allAnimals.Where(a => DateTime.Parse(a.HuntDate) <= endDate.Value).ToList();
                 }
-                var animals = animalsQuery.OrderBy(a => a.HuntDate).ToList();
+                var animals = allAnimals.OrderBy(a => a.HuntDate).ToList();
                 return AutoMapperImpl.Mapper.Map<List<HuntedAnimalDTO>>(animals);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                throw e;
             }
             return new List<HuntedAnimalDTO>();
         }

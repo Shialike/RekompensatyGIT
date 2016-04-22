@@ -124,7 +124,14 @@ namespace Rekompensaty
         {
             if (SelectedUser != null)
             {
-                HuntedAnimals = new ObservableCollection<HuntedAnimalDTO>(_dbAccess.GetHuntedAnimalsForUser(SelectedUser.Id, StartDate, EndDate));
+                try
+                {
+                    HuntedAnimals = new ObservableCollection<HuntedAnimalDTO>(_dbAccess.GetHuntedAnimalsForUser(SelectedUser.Id, StartDate, EndDate));
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message + "\n" + e.InnerException ?? "");
+                }
             }
         }
 
@@ -172,10 +179,7 @@ namespace Rekompensaty
 
         private void AddAnimalType_Click(object sender, RoutedEventArgs e)
         {
-            _dbAccess.AddAnimalType(new AnimalTypeDTO() { Name = "Jeleń" });
-            _dbAccess.AddAnimalType(new AnimalTypeDTO() { Name = "Daniel" });
-            _dbAccess.AddAnimalType(new AnimalTypeDTO() { Name = "Sarna" });
-            _dbAccess.AddAnimalType(new AnimalTypeDTO() { Name = "Dzik" });
+            
         }
 
         private void AddData_Click(object sender, RoutedEventArgs e)
