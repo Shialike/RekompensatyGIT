@@ -32,6 +32,7 @@ namespace Rekompensaty
         private DateTime _endDate;
         private UserDTO _selectedUser;
         private ObservableCollection<HuntedAnimalDTO> _huntedAnimals;
+        private HuntedAnimalDTO _selectedRow;
 
         #endregion
 
@@ -91,6 +92,17 @@ namespace Rekompensaty
             }
         }
 
+        public HuntedAnimalDTO SelectedRow
+        {
+            get { return _selectedRow; }
+            set
+            {
+                _selectedRow = value;
+                NotifyPropertyChanged("SelectedRow");
+                NotifyPropertyChanged("CanRemoveData");
+            }
+        }
+
         public ObservableCollection<HuntedAnimalDTO> HuntedAnimals
         {
             get { return _huntedAnimals; }
@@ -104,6 +116,11 @@ namespace Rekompensaty
         public bool CanAddData
         {
             get { return SelectedUser != null; }
+        }
+
+        public bool CanRemoveData
+        {
+            get { return SelectedRow != null; }
         }
 
         #endregion
@@ -167,19 +184,24 @@ namespace Rekompensaty
             }
         }
 
-        private void EditUser_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void RemoveUser_Click(object sender, RoutedEventArgs e)
         {
-
+            if(SelectedUser != null && MessageBoxResult.Yes == MessageBox.Show("Na pewno chcesz usunąć myśliwego oraz wszystkie powiązane z nim dane?", "Pytanie", MessageBoxButton.YesNo, MessageBoxImage.Question))
+            {
+                _dbAccess.RemoveUser(SelectedUser);
+                Users.Remove(SelectedUser);
+                SelectedUser = Users.FirstOrDefault();
+            }
         }
 
-        private void AddAnimalType_Click(object sender, RoutedEventArgs e)
+        private void RemoveData_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (SelectedRow != null && MessageBoxResult.Yes == MessageBox.Show("Na pewno chcesz usunąć dane polowania?", "Pytanie", MessageBoxButton.YesNo, MessageBoxImage.Question))
+            {
+                _dbAccess.RemoveHuntedAnimal(SelectedRow);
+                HuntedAnimals.Remove(SelectedRow);
+                SelectedRow = null;
+            }
         }
 
         private void AddData_Click(object sender, RoutedEventArgs e)
@@ -191,7 +213,9 @@ namespace Rekompensaty
             if (result.HasValue && result.Value)
             {
                 _dbAccess.AddHuntedAnimal(huntedAnimalDTO);
+                var selectedIdx = Users.IndexOf(SelectedUser);
                 FetchData();
+                SelectedUser = Users[selectedIdx];
             }
         }
 
@@ -210,5 +234,6 @@ namespace Rekompensaty
         }
 
         #endregion
+
     }
 }

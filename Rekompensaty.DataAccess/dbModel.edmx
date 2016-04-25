@@ -22,6 +22,7 @@
           <Property Name="Weight" Type="real" Nullable="false" />
           <Property Name="PricePerKilo" Type="real" Nullable="false" />
           <Property Name="AnimalTypeId" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="HuntingArea" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -91,7 +92,7 @@
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="HuntedAnimal" Relationship="dbModel.FK_HuntedAnimal_0_0" FromRole="AnimalType" ToRole="HuntedAnimal" />
+          <NavigationProperty Name="HuntedAnimals" Relationship="dbModel.FK_HuntedAnimal_0_0" FromRole="AnimalType" ToRole="HuntedAnimal" />
         </EntityType>
         <EntityType Name="HuntedAnimal">
           <Key>
@@ -103,6 +104,7 @@
           <Property Name="Weight" Type="Double" Nullable="false" />
           <Property Name="PricePerKilo" Type="Double" Nullable="false" />
           <Property Name="AnimalTypeId" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HuntingArea" Type="Int64" Nullable="false" />
           <NavigationProperty Name="AnimalType" Relationship="dbModel.FK_HuntedAnimal_0_0" FromRole="HuntedAnimal" ToRole="AnimalType" />
           <NavigationProperty Name="User" Relationship="dbModel.FK_HuntedAnimal_1_0" FromRole="HuntedAnimal" ToRole="User" />
         </EntityType>
@@ -113,7 +115,7 @@
           <Property Name="Id" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Surname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="HuntedAnimal" Relationship="dbModel.FK_HuntedAnimal_1_0" FromRole="User" ToRole="HuntedAnimal" />
+          <NavigationProperty Name="HuntedAnimals" Relationship="dbModel.FK_HuntedAnimal_1_0" FromRole="User" ToRole="HuntedAnimal" />
         </EntityType>
         <Association Name="FK_HuntedAnimal_0_0">
           <End Type="dbModel.AnimalType" Role="AnimalType" Multiplicity="1" />
@@ -156,6 +158,7 @@
           <EntitySetMapping Name="HuntedAnimals">
             <EntityTypeMapping TypeName="dbModel.HuntedAnimal">
               <MappingFragment StoreEntitySet="HuntedAnimal">
+                <ScalarProperty Name="HuntingArea" ColumnName="HuntingArea" />
                 <ScalarProperty Name="AnimalTypeId" ColumnName="AnimalTypeId" />
                 <ScalarProperty Name="PricePerKilo" ColumnName="PricePerKilo" />
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
@@ -187,7 +190,7 @@
     <edmx:Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
         <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />

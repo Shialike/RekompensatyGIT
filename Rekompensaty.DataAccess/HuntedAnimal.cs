@@ -20,6 +20,7 @@ namespace Rekompensaty.DataAccess
         public double Weight { get; set; }
         public double PricePerKilo { get; set; }
         public string AnimalTypeId { get; set; }
+        public long HuntingArea { get; set; }
     
         public virtual AnimalType AnimalType { get; set; }
         public virtual User User { get; set; }

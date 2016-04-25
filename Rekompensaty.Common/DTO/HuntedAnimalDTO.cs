@@ -12,6 +12,7 @@ namespace Rekompensaty.Common.DTO
         public AnimalTypeDTO AnimalType { get; set; }
         public decimal PricePerKilo { get; set; }
         public double Weight { get; set; }
+        public int HuntingArea { get; set; }
 
         public string HuntDateString
         {

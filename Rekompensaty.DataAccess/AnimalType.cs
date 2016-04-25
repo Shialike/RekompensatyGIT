@@ -17,13 +17,13 @@ namespace Rekompensaty.DataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AnimalType()
         {
-            this.HuntedAnimal = new HashSet<HuntedAnimal>();
+            this.HuntedAnimals = new HashSet<HuntedAnimal>();
         }
     
         public string Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HuntedAnimal> HuntedAnimal { get; set; }
+        public virtual ICollection<HuntedAnimal> HuntedAnimals { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Rekompensaty.DataAccess
     public interface IDatabaseMethods
     {
         bool CheckIfDatabaseIsCorrect();
-        IList<UserDTO> GetUsers();
+        List<UserDTO> GetUsers();
         void AddUser(UserDTO user);
         UserDTO EditUser(UserDTO user);
         void RemoveUser(UserDTO user);
@@ -19,6 +19,7 @@ namespace Rekompensaty.DataAccess
         void RemoveAnimalType(AnimalTypeDTO animalType);
         List<AnimalTypeDTO> GetAnimalTypes();
         IList<HuntedAnimalDTO> GetHuntedAnimalsForUser(Guid userId, DateTime? startDate = null, DateTime? endDate = null);
+        void RemoveHuntedAnimal(HuntedAnimalDTO animal);
         
     }
 }

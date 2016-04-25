@@ -44,7 +44,7 @@ namespace Rekompensaty.DataAccess
             return DatabaseService.Instance.GetHuntedAnimalsForUser(userId, startDate, endDate);
         }
 
-        public IList<UserDTO> GetUsers()
+        public List<UserDTO> GetUsers()
         {
             return DatabaseService.Instance.GetUsers();
         }
@@ -62,6 +62,11 @@ namespace Rekompensaty.DataAccess
         public void AddHuntedAnimal(HuntedAnimalDTO huntedAnimalDTO)
         {
             DatabaseService.Instance.AddHuntedAnimal(huntedAnimalDTO);
+        }
+
+        public void RemoveHuntedAnimal(HuntedAnimalDTO animal)
+        {
+            DatabaseService.Instance.RemoveHuntedAnimal(animal);
         }
     }
 }

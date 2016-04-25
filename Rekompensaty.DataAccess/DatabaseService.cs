@@ -146,23 +146,51 @@ namespace Rekompensaty.DataAccess
 
         public void RemoveUser(UserDTO user)
         {
-            throw new NotImplementedException();
+            if (user.Id == Guid.Empty)
+            {
+                return;
+            }
+            RunCommand(() =>
+            {
+                var id = user.Id.ToString();
+                var toRemove = Instance.Users.FirstOrDefault(a => a.Id == id);
+                if (toRemove != null)
+                {
+                    foreach (var animal in toRemove.HuntedAnimals.ToList())
+                    {
+                        Instance.HuntedAnimals.Remove(animal);
+                    }
+                    Instance.Users.Remove(toRemove);
+                }
+            });
         }
 
-        IList<UserDTO> IDatabaseMethods.GetUsers()
+        public void RemoveHuntedAnimal(HuntedAnimalDTO animal)
         {
-            throw new NotImplementedException();
+            if (animal.Id == Guid.Empty)
+            {
+                return;
+            }
+            RunCommand(() =>
+            {
+                var id = animal.Id.ToString();
+                var toRemove = Instance.HuntedAnimals.FirstOrDefault(a => a.Id == id);
+                if (toRemove != null)
+                {
+                    Instance.HuntedAnimals.Remove(toRemove);
+                }
+            });
         }
 
         #endregion
-        
+
         private void RunCommand(Action method)
         {
             try
             {
                 method();
             }
-            catch(Exception)
+            catch(Exception e)
             {
             }
             finally

@@ -26,6 +26,7 @@ namespace Rekompensaty
         private HuntedAnimalDTO _huntedAnimal;
         private UserDTO _hunter;
         private ObservableCollection<AnimalTypeDTO> _animalTypes;
+        private ObservableCollection<int> _huntingAreas;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -37,6 +38,8 @@ namespace Rekompensaty
             HuntedAnimal.UserId = hunter.Id;
             SelectedAnimalType = AnimalTypes.First();
             HuntDate = DateTime.Now;
+            HuntingAreas = new ObservableCollection<int>() { 51, 70 };
+            HuntingArea = 51;
             DataContext = this;
             Owner = owner;
             InitializeComponent();
@@ -136,6 +139,29 @@ namespace Rekompensaty
             }
         }
 
+        [Required]
+        public int HuntingArea
+        {
+            get { return HuntedAnimal.HuntingArea; }
+            set
+            {
+                HuntedAnimal.HuntingArea = value;
+                NotifyOnPropertyChange("HuntingArea");
+                NotifyOnPropertyChange("CanSave");
+            }
+        }
+
+        public ObservableCollection<int> HuntingAreas
+        {
+            get { return _huntingAreas; }
+            set
+            {
+                _huntingAreas = value;
+                NotifyOnPropertyChange("HuntingAreas");
+                NotifyOnPropertyChange("HuntingArea");
+            }
+        }
+
         public DateTime HuntDate
         {
             get { return HuntedAnimal.HuntDate; }
@@ -149,7 +175,7 @@ namespace Rekompensaty
 
         public bool CanSave
         {
-            get { return HuntDate != null && HuntDate > DateTime.MinValue && Price > 0 && Weight > 0 && SelectedAnimalType != null; }
+            get { return HuntDate != null && HuntDate > DateTime.MinValue && Price > 0 && Weight > 0 && SelectedAnimalType != null && (HuntingArea == 51 || HuntingArea == 70); }
         }
 
     }

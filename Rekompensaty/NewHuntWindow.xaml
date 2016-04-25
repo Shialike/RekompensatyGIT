@@ -38,18 +38,33 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding HunterName}" />
+        
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Typ zwierzyny: " />
         <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding AnimalTypes}" SelectedItem="{Binding SelectedAnimalType, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" DisplayMemberPath="Name" />
+        
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Data polowania: " />
         <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding HuntDate, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+        
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Waga (kg): " />
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged, StringFormat=00.00, NotifyOnValidationError=True}" />
+        
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Cena (zł) za kilogram: " />
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, StringFormat=0.00, NotifyOnValidationError=True}" />
-        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Numer obwodu: " />
+        <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding HuntingAreas}" SelectedItem="{Binding HuntingArea, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" MaxHeight="22" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Button Height="23" Content="Zapisz" Click="Save" IsEnabled="{Binding CanSave}" />
             <Button Height="23" Content="Anuluj" Click="Cancel" />
         </StackPanel>

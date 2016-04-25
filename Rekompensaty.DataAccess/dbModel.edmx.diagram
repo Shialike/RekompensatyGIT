@@ -5,9 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="23d557e0b4e14229ae975fdc8b727368" Name="Diagram1" >
-        <EntityTypeShape EntityType="dbModel.AnimalType" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="dbModel.AnimalType" Width="1.5" PointX="0.75" PointY="5.5" />
         <EntityTypeShape EntityType="dbModel.HuntedAnimal" Width="1.5" PointX="3" PointY="1" />
-        <EntityTypeShape EntityType="dbModel.User" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="dbModel.User" Width="1.5" PointX="0.75" PointY="1.5" />
         <AssociationConnector Association="dbModel.FK_HuntedAnimal_0_0" />
         <AssociationConnector Association="dbModel.FK_HuntedAnimal_1_0" />
       </Diagram>
