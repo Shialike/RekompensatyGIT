@@ -1,9 +1,12 @@
-﻿using Rekompensaty.Common.DTO;
+﻿using Microsoft.Reporting.WebForms;
+using Rekompensaty.Common.DTO;
 using Rekompensaty.DataAccess;
+using SUT.PrintEngine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +15,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -47,6 +51,14 @@ namespace Rekompensaty
         }
 
         #region Properties
+
+        public double Suma
+        {
+            get
+            {
+                return HuntedAnimals.Sum(x => x.Revenue);
+            }
+        }
 
         public DateTime StartDate
         {
@@ -88,6 +100,7 @@ namespace Rekompensaty
                 _selectedUser = value;
                 NotifyPropertyChanged("SelectedUser");
                 NotifyPropertyChanged("CanAddData");
+                NotifyPropertyChanged("SummaryString");
                 FetchHuntedAnimals();
             }
         }
@@ -110,6 +123,7 @@ namespace Rekompensaty
             {
                 _huntedAnimals = value;
                 NotifyPropertyChanged("HuntedAnimals");
+                NotifyPropertyChanged("Suma");
             }
         }
 
@@ -121,6 +135,14 @@ namespace Rekompensaty
         public bool CanRemoveData
         {
             get { return SelectedRow != null; }
+        }
+
+        public string SummaryString
+        {
+            get
+            {
+                return SelectedUser.FullName + " suma rekompensat: ";
+            }
         }
 
         #endregion
@@ -219,6 +241,20 @@ namespace Rekompensaty
             }
         }
 
+        private void PrintData_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var visualSize = new Size(dataGrid.ActualWidth, dataGrid.ActualHeight);
+                var printControl = PrintControlFactory.Create(visualSize, dataGrid);
+                printControl.ShowPrintPreview();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Wystąpił błąd podczas próby drukowania!\n {0}", ex.Message), "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         #endregion
 
         #region INotifyPropertChanged implementation
@@ -234,6 +270,5 @@ namespace Rekompensaty
         }
 
         #endregion
-
     }
 }

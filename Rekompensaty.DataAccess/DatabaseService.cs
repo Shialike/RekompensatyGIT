@@ -2,6 +2,7 @@
 using Rekompensaty.Common.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -130,7 +131,6 @@ namespace Rekompensaty.DataAccess
             {
                 throw e;
             }
-            return new List<HuntedAnimalDTO>();
         }
 
         public List<UserDTO> GetUsers()
@@ -190,7 +190,7 @@ namespace Rekompensaty.DataAccess
             {
                 method();
             }
-            catch(Exception e)
+            catch(Exception)
             {
             }
             finally
