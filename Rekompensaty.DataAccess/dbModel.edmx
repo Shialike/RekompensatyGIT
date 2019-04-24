@@ -4,13 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="dbModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;D:\SRC\RekompensatyGIT\Rekompensaty\bin\Debug\dbRekompensaty.sqlite&quot;" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="dbModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=D:\SRC\RekompensatyGIT\Rekompensaty\bin\Debug\dbRekompensaty.sqlite" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnimalType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="RevenueValue" Type="real" />
         </EntityType>
         <EntityType Name="HuntedAnimal">
           <Key>
@@ -23,6 +24,13 @@
           <Property Name="PricePerKilo" Type="real" Nullable="false" />
           <Property Name="AnimalTypeId" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
           <Property Name="HuntingArea" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProgramData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" Nullable="false" />
+          <Property Name="dbVersion" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -59,6 +67,7 @@
         <EntityContainer Name="dbModelStoreContainer">
           <EntitySet Name="AnimalType" EntityType="Self.AnimalType" store:Type="Tables" />
           <EntitySet Name="HuntedAnimal" EntityType="Self.HuntedAnimal" store:Type="Tables" />
+          <EntitySet Name="ProgramData" EntityType="Self.ProgramData" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" store:Type="Tables" />
           <AssociationSet Name="FK_HuntedAnimal_0_0" Association="Self.FK_HuntedAnimal_0_0">
             <End Role="AnimalType" EntitySet="AnimalType" />
@@ -85,6 +94,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="HuntedAnimal" EntitySet="HuntedAnimals" />
           </AssociationSet>
+          <EntitySet Name="ProgramDatas" EntityType="dbModel.ProgramData" />
         </EntityContainer>
         <EntityType Name="AnimalType">
           <Key>
@@ -93,6 +103,7 @@
           <Property Name="Id" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="HuntedAnimals" Relationship="dbModel.FK_HuntedAnimal_0_0" FromRole="AnimalType" ToRole="HuntedAnimal" />
+          <Property Name="RevenueValue" Type="Double" />
         </EntityType>
         <EntityType Name="HuntedAnimal">
           <Key>
@@ -141,6 +152,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProgramData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="dbVersion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -150,6 +168,7 @@
           <EntitySetMapping Name="AnimalTypes">
             <EntityTypeMapping TypeName="dbModel.AnimalType">
               <MappingFragment StoreEntitySet="AnimalType">
+                <ScalarProperty Name="RevenueValue" ColumnName="RevenueValue" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -173,6 +192,14 @@
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProgramDatas">
+            <EntityTypeMapping TypeName="dbModel.ProgramData">
+              <MappingFragment StoreEntitySet="ProgramData">
+                <ScalarProperty Name="dbVersion" ColumnName="dbVersion" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

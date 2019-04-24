@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rekompensaty", "Rekompensaty\Rekompensaty.csproj", "{57535EF1-2352-4898-B41D-F631ECB26A29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rekompensaty.DataAccess", "Rekompensaty.DataAccess\Rekompensaty.DataAccess.csproj", "{BE3269DA-878F-4A9F-B5F0-197FB7E2AA04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rekompensaty.Common", "Rekompensaty.Common\Rekompensaty.Common.csproj", "{2ACA5A59-F036-417F-99D6-6870612531EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rekompensaty.Updater", "Rekompensaty.Updater\Rekompensaty.Updater.csproj", "{72D1861C-720D-47C5-9BD4-90EDB1F80D38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,8 +29,15 @@ Global
 		{2ACA5A59-F036-417F-99D6-6870612531EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2ACA5A59-F036-417F-99D6-6870612531EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2ACA5A59-F036-417F-99D6-6870612531EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72D1861C-720D-47C5-9BD4-90EDB1F80D38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D1861C-720D-47C5-9BD4-90EDB1F80D38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D1861C-720D-47C5-9BD4-90EDB1F80D38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D1861C-720D-47C5-9BD4-90EDB1F80D38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {68EE449D-E52C-4565-AD3F-CCD7C3E2633D}
 	EndGlobalSection
 EndGlobal

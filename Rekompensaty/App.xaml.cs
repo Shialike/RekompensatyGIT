@@ -1,4 +1,5 @@
-﻿using Rekompensaty.DataAccess;
+﻿using Rekompensaty.Common;
+using Rekompensaty.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,9 +22,14 @@ namespace Rekompensaty
             try
             {
                 var dbAccess = new DatabaseAccess();
-                if(!dbAccess.CheckIfDatabaseIsCorrect())
+                if (!dbAccess.CheckIfDatabaseIsCorrect())
                 {
                     NoDBError("");
+                }
+                var version = dbAccess.GetDBVersion();
+                if (version == null || version != new Version(Constants.DbVersion))
+                {
+                    NoDBError($"Nieprawidłowa wersja bazy! Jest: {version} - oczekiwano: {Constants.DbVersion}");
                 }
             }
             catch (Exception ex)

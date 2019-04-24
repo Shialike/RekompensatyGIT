@@ -35,6 +35,8 @@
                 <MenuItem Header="Dod_aj myśliwego" Click="AddUser_Click" />
                 <!--<MenuItem Header="_Edytuj myśliwego" Click="EditUser_Click" />-->
                 <MenuItem Header="U_suń myśliwego" Click="RemoveUser_Click" IsEnabled="{Binding CanAddData}" />
+                <Separator />
+                <MenuItem Header="U_stawienia" Click="ChangeSettings_Click" />
             </MenuItem>
         </Menu>
         <ComboBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FullName" 

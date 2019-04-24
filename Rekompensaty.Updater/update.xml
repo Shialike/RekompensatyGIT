@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Updates>
+	<Version v="0.0.0.0">
+    CREATE TABLE `ProgramData` (
+    `Id`	INTEGER NOT NULL,
+    `dbVersion`	TEXT,
+    PRIMARY KEY(`Id`)
+    );
+  </Version>
+	<Version v="0.0.0.1">
+      INSERT INTO 'ProgramData' VALUES('1', '0.0.0.1')
+	</Version>
+  <Version v="0.0.0.2">
+    ALTER TABLE AnimalType ADD COLUMN RevenueValue REAL DEFAULT '0.2'
+  </Version>
+</Updates>

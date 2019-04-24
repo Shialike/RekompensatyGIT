@@ -20,6 +20,9 @@ namespace Rekompensaty.DataAccess
         List<AnimalTypeDTO> GetAnimalTypes();
         IList<HuntedAnimalDTO> GetHuntedAnimalsForUser(Guid userId, DateTime? startDate = null, DateTime? endDate = null);
         void RemoveHuntedAnimal(HuntedAnimalDTO animal);
-        
+        Version GetDBVersion();
+        void RunSQL(string sql);
+
+
     }
 }

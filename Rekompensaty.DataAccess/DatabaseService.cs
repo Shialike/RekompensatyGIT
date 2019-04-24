@@ -186,17 +186,45 @@ namespace Rekompensaty.DataAccess
 
         private void RunCommand(Action method)
         {
+            RunCommand(method);
+        }
+
+        private object RunCommand(Func<object> method)
+        {
             try
             {
-                method();
+                return method();
             }
-            catch(Exception)
+            catch (Exception)
             {
             }
             finally
             {
                 Instance.SaveChanges();
             }
+            return null;
+        }
+
+        public Version GetDBVersion()
+        {
+            try
+            {
+                var ver = Instance.ProgramDatas.FirstOrDefault();
+                if (ver != null)
+                {
+                    return new Version(ver.dbVersion);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            return null;
+        }
+
+        public void RunSQL(string sql)
+        {
+            Instance.Database.ExecuteSqlCommand(sql);
         }
     }
 }

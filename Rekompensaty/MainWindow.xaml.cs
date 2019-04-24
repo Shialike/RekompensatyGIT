@@ -255,6 +255,14 @@ namespace Rekompensaty
             }
         }
 
+
+        private void ChangeSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var animalTypes = _dbAccess.GetAnimalTypes();
+            var edtWnd = new SettingsWindow(animalTypes.ToList(), this);
+            var result = edtWnd.ShowDialog();
+        }
+
         #endregion
 
         #region INotifyPropertChanged implementation
@@ -270,5 +278,6 @@ namespace Rekompensaty
         }
 
         #endregion
+
     }
 }

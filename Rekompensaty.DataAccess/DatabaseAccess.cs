@@ -44,6 +44,11 @@ namespace Rekompensaty.DataAccess
             return DatabaseService.Instance.GetHuntedAnimalsForUser(userId, startDate, endDate);
         }
 
+        public void RunSQL(string sql)
+        {
+            DatabaseService.Instance.RunSQL(sql);
+        }
+
         public List<UserDTO> GetUsers()
         {
             return DatabaseService.Instance.GetUsers();
@@ -67,6 +72,11 @@ namespace Rekompensaty.DataAccess
         public void RemoveHuntedAnimal(HuntedAnimalDTO animal)
         {
             DatabaseService.Instance.RemoveHuntedAnimal(animal);
+        }
+
+        public Version GetDBVersion()
+        {
+            return DatabaseService.Instance.GetDBVersion();
         }
     }
 }

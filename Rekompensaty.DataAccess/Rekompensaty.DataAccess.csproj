@@ -107,6 +107,9 @@
     </Compile>
     <Compile Include="IDatabaseMethods.cs" />
     <Compile Include="IEntityClass.cs" />
+    <Compile Include="ProgramData.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs">
       <DependentUpon>dbModel.tt</DependentUpon>

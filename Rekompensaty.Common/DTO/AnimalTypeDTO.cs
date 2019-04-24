@@ -9,5 +9,6 @@ namespace Rekompensaty.Common.DTO
     public class AnimalTypeDTO : BaseDTO
     {
         public string Name { get; set; }
+        public double RevenueValue { get; set; }
     }
 }
