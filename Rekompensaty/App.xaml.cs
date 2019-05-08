@@ -22,19 +22,20 @@ namespace Rekompensaty
             try
             {
                 var dbAccess = new DatabaseAccess();
-                if (!dbAccess.CheckIfDatabaseIsCorrect())
-                {
-                    NoDBError("");
-                }
                 var version = dbAccess.GetDBVersion();
                 if (version == null || version != new Version(Constants.DbVersion))
                 {
                     NoDBError($"Nieprawidłowa wersja bazy! Jest: {version} - oczekiwano: {Constants.DbVersion}");
                 }
+                if (!dbAccess.CheckIfDatabaseIsCorrect())
+                {
+                    NoDBError("");
+                }
+                
             }
             catch (Exception ex)
             {
-                NoDBError(ex.Message);
+                NoDBError(ex.Message + "\n" + ex.InnerException?.Message);
             }
         }
 

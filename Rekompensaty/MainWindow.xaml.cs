@@ -141,7 +141,7 @@ namespace Rekompensaty
         {
             get
             {
-                return SelectedUser.FullName + " suma rekompensat: ";
+                return SelectedUser?.FullName ?? "" + " suma rekompensat: ";
             }
         }
 
@@ -261,6 +261,10 @@ namespace Rekompensaty
             var animalTypes = _dbAccess.GetAnimalTypes();
             var edtWnd = new SettingsWindow(animalTypes.ToList(), this);
             var result = edtWnd.ShowDialog();
+            if (result == true)
+            {
+                _dbAccess.SaveAnimalTypes(edtWnd.AnimalTypes);
+            }
         }
 
         #endregion

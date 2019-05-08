@@ -22,7 +22,7 @@ namespace Rekompensaty.DataAccess
         void RemoveHuntedAnimal(HuntedAnimalDTO animal);
         Version GetDBVersion();
         void RunSQL(string sql);
-
+        void SaveAnimalTypes(List<AnimalTypeDTO> animalTypes);
 
     }
 }

@@ -24,6 +24,7 @@
           <Property Name="PricePerKilo" Type="real" Nullable="false" />
           <Property Name="AnimalTypeId" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
           <Property Name="HuntingArea" Type="integer" Nullable="false" />
+          <Property Name="RevenueValue" Type="real" />
         </EntityType>
         <EntityType Name="ProgramData">
           <Key>
@@ -118,6 +119,7 @@
           <Property Name="HuntingArea" Type="Int64" Nullable="false" />
           <NavigationProperty Name="AnimalType" Relationship="dbModel.FK_HuntedAnimal_0_0" FromRole="HuntedAnimal" ToRole="AnimalType" />
           <NavigationProperty Name="User" Relationship="dbModel.FK_HuntedAnimal_1_0" FromRole="HuntedAnimal" ToRole="User" />
+          <Property Name="RevenueValue" Type="Double" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -177,6 +179,7 @@
           <EntitySetMapping Name="HuntedAnimals">
             <EntityTypeMapping TypeName="dbModel.HuntedAnimal">
               <MappingFragment StoreEntitySet="HuntedAnimal">
+                <ScalarProperty Name="RevenueValue" ColumnName="RevenueValue" />
                 <ScalarProperty Name="HuntingArea" ColumnName="HuntingArea" />
                 <ScalarProperty Name="AnimalTypeId" ColumnName="AnimalTypeId" />
                 <ScalarProperty Name="PricePerKilo" ColumnName="PricePerKilo" />

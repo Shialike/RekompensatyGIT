@@ -110,6 +110,7 @@ namespace Rekompensaty
             set
             {
                 HuntedAnimal.AnimalType = value;
+                HuntedAnimal.RevenueValue = value.RevenueValue;
                 NotifyOnPropertyChange("SelectedAnimalType");
                 NotifyOnPropertyChange("CanSave");
             }

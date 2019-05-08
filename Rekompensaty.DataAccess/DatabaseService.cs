@@ -73,6 +73,19 @@ namespace Rekompensaty.DataAccess
             return exists && GetAnimalTypes().Count > 0;
         }
 
+        public void SaveAnimalTypes(List<AnimalTypeDTO> animalTypes)
+        {
+            foreach (var item in animalTypes)
+            {
+                var dbItem = Instance.AnimalTypes.SingleOrDefault(x => x.Id == item.Id.ToString());
+                if (dbItem != null)
+                {
+                    dbItem.RevenueValue = item.RevenueValue;
+                    RunCommand(() => Instance.Entry(dbItem).State = System.Data.Entity.EntityState.Modified);
+                }
+            }
+        }
+
         public void EditAnimalType(AnimalTypeDTO animalType)
         {
             throw new NotImplementedException();

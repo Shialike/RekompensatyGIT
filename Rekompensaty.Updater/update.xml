@@ -13,4 +13,7 @@
   <Version v="0.0.0.2">
     ALTER TABLE AnimalType ADD COLUMN RevenueValue REAL DEFAULT '0.2'
   </Version>
+  <Version v="0.0.0.3">
+    ALTER TABLE HuntedAnimal ADD COLUMN RevenueValue REAL DEFAULT '0.2'
+  </Version>
 </Updates>

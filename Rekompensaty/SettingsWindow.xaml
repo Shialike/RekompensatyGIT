@@ -44,8 +44,8 @@
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Rekompensata: " />
         <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Value="{Binding SelectedRevenue, UpdateSourceTrigger=PropertyChanged}" FormatString="P" Minimum="0" Maximum="1" Increment="0.05" />
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Button Height="23" Content="Zapisz"  />
-            <Button Height="23" Content="Anuluj"  />
+            <Button Height="23" Content="Zapisz" Click="Save_Click" />
+            <Button Height="23" Content="Anuluj" Click="Close_Click"  />
         </StackPanel>
     </Grid>
 </Window>

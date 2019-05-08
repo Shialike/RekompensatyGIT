@@ -64,7 +64,7 @@
                 <DataGridTextColumn Header="Cena za kilogram" Binding="{Binding PricePerKilo, StringFormat=0.00zł}" Width="*" MinWidth="55" />
                 <DataGridTextColumn Header="Waga" Binding="{Binding Weight, StringFormat=00.00kg}" Width="*" MinWidth="50" />
                 <DataGridTextColumn Header="Cena" Binding="{Binding TotalPrice, StringFormat=0.00zł}" Width="*" MinWidth="50" />
-                <DataGridTextColumn Header="Rekompensata" Binding="{Binding Revenue, StringFormat=0.00zł}" Width="*" MinWidth="75" />
+                <DataGridTextColumn Header="Rekompensata" Binding="{Binding RevenueString}" Width="*" MinWidth="75" />
             </DataGrid.Columns>
             </DataGrid>
             <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="5" TextAlignment="Right" Text="{Binding SummaryString}" FontSize="14" FontWeight="Bold" />

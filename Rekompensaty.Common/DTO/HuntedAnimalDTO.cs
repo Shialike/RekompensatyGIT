@@ -13,6 +13,7 @@ namespace Rekompensaty.Common.DTO
         public decimal PricePerKilo { get; set; }
         public double Weight { get; set; }
         public int HuntingArea { get; set; }
+        public double RevenueValue { get; set; }
 
         public string HuntDateString
         {
@@ -31,7 +32,15 @@ namespace Rekompensaty.Common.DTO
         {
             get
             {
-                return TotalPrice * 0.1;
+                return TotalPrice * RevenueValue;
+            }
+        }
+
+        public string RevenueString
+        {
+            get
+            {
+                return $"{Revenue.ToString("0.00zł")} ({RevenueValue.ToString("P")})";
             }
         }
 

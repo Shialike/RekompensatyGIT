@@ -78,5 +78,10 @@ namespace Rekompensaty.DataAccess
         {
             return DatabaseService.Instance.GetDBVersion();
         }
+
+        public void SaveAnimalTypes(List<AnimalTypeDTO> animalTypes)
+        {
+            DatabaseService.Instance.SaveAnimalTypes(animalTypes);
+        }
     }
 }

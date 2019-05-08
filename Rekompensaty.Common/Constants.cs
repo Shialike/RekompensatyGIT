@@ -9,6 +9,6 @@ namespace Rekompensaty.Common
     public static class Constants
     {
         public const string DatabaseFileName = "dbRekompensaty.mdf";
-        public const string DbVersion = "0.0.0.2";
+        public const string DbVersion = "0.0.0.3";
     }
 }
