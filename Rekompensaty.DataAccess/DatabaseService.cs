@@ -199,7 +199,11 @@ namespace Rekompensaty.DataAccess
 
         private void RunCommand(Action method)
         {
-            RunCommand(method);
+            RunCommand(() =>
+            {
+                method();
+                return null;
+            });
         }
 
         private object RunCommand(Func<object> method)
