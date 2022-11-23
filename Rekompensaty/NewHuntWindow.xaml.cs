@@ -38,8 +38,8 @@ namespace Rekompensaty
             HuntedAnimal.UserId = hunter.Id;
             SelectedAnimalType = AnimalTypes.First();
             HuntDate = DateTime.Now;
-            HuntingAreas = new ObservableCollection<int>() { 51, 70 };
-            HuntingArea = 51;
+            HuntingAreas = new ObservableCollection<int>() { 37, 60 };
+            HuntingArea = 37;
             DataContext = this;
             Owner = owner;
             InitializeComponent();
@@ -176,7 +176,7 @@ namespace Rekompensaty
 
         public bool CanSave
         {
-            get { return HuntDate != null && HuntDate > DateTime.MinValue && Price > 0 && Weight > 0 && SelectedAnimalType != null && (HuntingArea == 51 || HuntingArea == 70); }
+            get { return HuntDate != null && HuntDate > DateTime.MinValue && Price > 0 && Weight > 0 && SelectedAnimalType != null && (HuntingArea == 37 || HuntingArea == 60); }
         }
 
     }
